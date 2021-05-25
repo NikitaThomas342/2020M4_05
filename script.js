@@ -36,12 +36,23 @@ function addDigit(dig_obj) {
     stored = current;
     current = "";
    }
+   function operate2(new_obj) {
+    nnew = new_obj.value;
+    if (nnew.indexOf("xy") > -1) { operation = 5; }
+    if (nnew.indexOf("xrooty") > -1) { operation = 6; }
+    if (nnew.indexOf("logyx") > -1) { operation = 7; }
+    stored = current;
+    current = "";
+   }
    function calculate() {
     tmp = current;
     if (operation == 1) { current = eval(stored) + eval(current); };
     if (operation == 2) { current = eval(stored) - eval(current); };
     if (operation == 3) { current = eval(stored) * eval(current); };
     if (operation == 4) { current = eval(stored) / eval(current); };
+    if (operation == 5) { current = Math.pow(eval(stored), eval(current))};
+    if (operation == 6) { current = Math.sqrt(eval(stored) ,(eval(current)))};
+    if (operation == 7) { current = Math.log(eval(current)) / Math.log(eval(stored)); };
     if (current.toString().length > MaxLength) {
     current = "Too long";
     }
@@ -80,6 +91,14 @@ function addDigit(dig_obj) {
        current = Math.log(current);
        document.getElementById("display").innerHTML=current;
    }
+   function e(){
+    current = current * Math.E;
+    document.getElementById("display").innerHTML=current;
+    }
+    function pi(){
+        current = current * Math.PI;
+        document.getElementById("display").innerHTML=current;
+    }
    document.getElementById("clear").addEventListener("click",clearDisp);
    document.getElementById("dot").addEventListener("click",addDot);
    document.getElementById("eval").addEventListener("click",calculate);
@@ -91,6 +110,8 @@ function addDigit(dig_obj) {
    document.getElementById("1/x").addEventListener("click",x1);
    document.getElementById("2√x").addEventListener("click",xroot2);
    document.getElementById("lnx").addEventListener("click",baselog);
+   document.getElementById("e").addEventListener("click",e);
+   document.getElementById("pi").addEventListener("click",pi);
    let all_num = document.getElementsByClassName("num")
    for ( let i=0 ; i<all_num.length ; i++) {
     all_num[i].addEventListener("click",function() {addDigit(this);});
@@ -98,4 +119,8 @@ function addDigit(dig_obj) {
    let all_ops = document.getElementsByClassName("ops")
    for ( let i=0 ; i<all_ops.length ; i++) {
     all_ops[i].addEventListener("click",function() {operate(this);});
+   }
+   let all_new = document.getElementsByClassName("new")
+   for ( let i=0 ; i<all_new.length ; i++) {
+    all_new[i].addEventListener("click",function() {operate2(this);});
    }
